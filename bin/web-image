@@ -1,0 +1,46 @@
+#!/bin/bash -eu
+
+function link() {
+  awk -v q='"' '{a=$1;b=$2;$1="";$2="";gsub(/^ */,"");print "<div class=\"item\"><a href=\""a"\"><img src=\""b"\">"$0"</a></div>";}'
+}
+
+cat << EOT > index.html
+<html>
+  <head>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin : 0;
+  padding : 0;
+}
+.grid {
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.grid-item {
+    width: 30%;
+}
+.item img {
+    width: 100%;
+    height: auto;
+}
+</style>
+  </head>
+  <body>
+
+<div class="grid">
+`cat - | link`
+</div>
+
+  </body>
+</html>
+EOT
+
+google-chrome ./index.html
+
+sleep 1
+rm ./index.html

@@ -1,7 +1,7 @@
 #!/bin/bash -eu
 
 function link() {
-  awk -v q='"' '{a=$1;b=$2;$1="";$2="";gsub(/^ */,"");print "<div class=\"item\"><a href=\""a"\"><img src=\""b"\">"$0"</a></div>";}'
+  awk -v q='"' '{a=$1;b=$2;$1="";$2="";gsub(/^ */,"");print "<div class=\"item\"><a href=\""a"\" target=\"_blank\"><img src=\""b"\">"$0"</a></div>";}'
 }
 
 cat << EOT > index.html

@@ -1,0 +1,15 @@
+#!/bin/bash -eu
+
+
+function process() {
+  local url=$1
+  curl -s $url |
+  pup 'head meta json{}' |
+  jq '.[] | select(.property != null) | { (.property): .content }' |
+  jq -s -c add |
+  jq -r '[."og:url", ."og:image", ."og:title" ] | join(" ")'
+}
+
+export -f process
+
+parallel process
